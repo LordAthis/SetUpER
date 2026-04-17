@@ -73,7 +73,7 @@ if($choice -eq "0") {
     foreach($cat in $cats.Keys) {
         $apps = $cats[$cat]
         $target = $apps | Where-Object { $_.id -eq $choice -or $choice -eq "${cat}$($apps.IndexOf($_)+1)" }
-        if($target) { & ".\Scripts\Install-$($target).ps1" $config; break }
+        if($target) { & ".\Scripts\Install-$($target).ps1" -Config $config; break }
     }
 }
 
