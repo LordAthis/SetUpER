@@ -1,10 +1,3 @@
-
-    # Itt az -ArgumentList kapja meg a tömböt
-
-# Config Ă©s AppsList betĂ¶ltĂ©s (javĂ­tott Ăştvonalak)
-
-# AlapĂ©rtelmezett meghajtĂł vĂˇlasztĂˇs
-
 # Starter.ps1 - Fő indí­tó
 
 # Jogosultság emelés
