@@ -1,0 +1,8 @@
+LOG/*.log
+Apps/*.exe
+Apps/*.msi
+Apps/*.zip
+Downloads/
+*.tmp
+Thumbs.db
+.DS_Store
