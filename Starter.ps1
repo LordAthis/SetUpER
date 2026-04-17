@@ -1,12 +1,12 @@
 # Starter.ps1 - Fő indító
 
-# Jogosultság ellenőrzés és emelés
+# Jogosultság emelés
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" -Elevated" -Verb RunAs
     exit $LASTEXITCODE
 }
 
-# Mappa létrehozás
+# Mappák létrehozása
 New-Item -ItemType Directory -Force -Path "LOG", "Scripts", "Apps" | Out-Null
 
 function Write-Log {
@@ -17,9 +17,9 @@ function Write-Log {
     Add-Content -Path "LOG/setup.log" -Value $logMessage
 }
 
-# Config betöltés
-$config = Get-Content "Config.json" | ConvertFrom-Json
-$appsList = Get-Content "AppsList.json" | ConvertFrom-Json
+# Config és AppsList betöltés (javított útvonalak)
+$config = Get-Content "Scripts/Config.json" | ConvertFrom-Json
+$appsList = Get-Content "Apps/AppsList.json" | ConvertFrom-Json
 
 # Alapértelmezett meghajtó választás
 $drives = $config.defaultDrives
@@ -27,7 +27,7 @@ Write-Host "Alapértelmezett telepítési meghajtó választás:"
 for($i=0; $i -lt $drives.Length; $i++) { Write-Host "$($i+1). $($drives[$i])" }
 $driveChoice = Read-Host "Válassz (Enter = 1. $($drives[0]))"
 if([string]::IsNullOrEmpty($driveChoice)) { $driveChoice = 0 }
-$config.installDir = "$($drives[$driveChoice-1])\\Program Files"
+$config.installDir = "$($drives[$driveChoice])\\Program Files"
 Write-Log "Telepítési útvonal: $($config.installDir)"
 
 # Telepített app-ek lekérdezés
@@ -64,14 +64,12 @@ $choice = Read-Host "`nVálassz (pl. A1, 0, X)"
 if($choice -eq "X" -or $choice -eq "x") { exit }
 
 if($choice -eq "0") {
-    # Összes
     foreach($cat in $cats.Keys | Sort-Object) {
         foreach($app in $cats[$cat]) {
             Install-App $app $config
         }
     }
 } else {
-    # Egyedi
     foreach($cat in $cats.Keys) {
         $apps = $cats[$cat]
         $target = $apps | Where-Object { $_.id -eq $choice -or $choice -eq "${cat}$($apps.IndexOf($_)+1)" }
@@ -84,7 +82,7 @@ Write-Log "Telepítés befejezve"
 function Install-App($app, $config) {
     Write-Log "Telepítés indítása: $($app.name)"
     Show-Progress "Letöltés..." { & Scripts/UpDateR.ps1 -AppId $app.id }
-    Show-Progress "Telepítés..." { & Scripts/Install-$($app.id.Split('-')[0]).ps1 -InstallDir $config.installDir }
+    Show-Progress "Telepítés..." { & Scripts/Install-$($app.id).ps1 -InstallDir $config.installDir }
     Write-Log "Sikeresen telepítve: $($app.name)"
 }
 
