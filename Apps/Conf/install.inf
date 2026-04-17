@@ -1,0 +1,23 @@
+﻿[Version]
+ver=11.x
+
+[Install]
+; 1 = Telepítés, nem csak kicsomagolás
+install=1
+; Célmappa (szóközökkel, ahogy kérted)
+directory=C:\Program Files\Total Commander
+; Ikoncsoport neve a Start menüben
+group=Total Commander
+; Ikonok létrehozása (1 = igen)
+desktop=1
+startmenu=1
+allusers=1
+; Nyelv (8 = Magyar)
+language=8
+; Csak a választott nyelvet tartja meg
+alllanguages=0
+; INI fájl helye: . = program könyvtára, 0 = minden felhasználónak ugyanaz
+iniloc=.
+inishare=0
+; Frissítés esetén ne kérdezzen (1 = felülírja a régit)
+update=1
