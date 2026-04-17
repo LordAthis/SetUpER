@@ -1,23 +1,26 @@
 {
   "apps": [
     {
-      "id": "TotalCommander",
+      "id": "TC",
       "name": "Total Commander",
       "category": "A",
+      "downloadUrl": "https://www.ghisler.com/tcmd1102_x64.exe",
       "installer": "tc.exe /S",
-      "uninstallKey": "TotalCommander"
+      "uninstallKey": "Total Commander"
     },
     {
-      "id": "HDSentinel",
+      "id": "HDS",
       "name": "H.D.Sentinel",
       "category": "A",
-      "installer": "hdsentinel.exe /S",
+      "downloadUrl": "https://www.hdsentinel.com/hdsentinel_pro_setup.exe",
+      "installer": "hdsentinel.exe /VERYSILENT /NORESTART",
       "uninstallKey": "Hard Disk Sentinel"
     },
     {
       "id": "VLC",
       "name": "VLC MediaPlayer",
       "category": "B",
+      "downloadUrl": "https://get.videolan.org/vlc/3.0.21.1/win64/vlc-3.0.21.1-win64.exe",
       "installer": "vlc.exe /S",
       "uninstallKey": "VLC media player"
     },
@@ -25,20 +28,23 @@
       "id": "Brave",
       "name": "Brave",
       "category": "B",
-      "installer": "BraveBrowserStandaloneSetup.exe /silent",
+      "downloadUrl": "https://github.com/brave/brave-browser/releases/download/v1.65.113/BraveBrowserStandaloneSetup.exe",
+      "installer": "BraveBrowserStandaloneSetup.exe --chrome-silent-install",
       "uninstallKey": "BraveSoftware"
     },
     {
       "id": "WinZip",
       "name": "WinZip",
       "category": "C",
-      "installer": "winzip.exe /noqp",
+      "downloadUrl": "https://downloads.winzip.com/wzfx76.exe",
+      "installer": "wzfx76.exe /noqp",
       "uninstallKey": "WinZip"
     },
     {
       "id": "7Zip",
       "name": "7-Zip",
       "category": "C",
+      "downloadUrl": "https://www.7-zip.org/a/7z2408-x64.exe",
       "installer": "7z.exe /S",
       "uninstallKey": "7-Zip"
     }
