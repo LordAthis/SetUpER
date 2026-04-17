@@ -8,17 +8,17 @@
 # Mappa struktúra
 SetUpER/
 ├── Starter.ps1
-├── Config.json
-├── Compatibility.json
-├── AppsList.json
 ├── LOG/
 ├── Scripts/
+│   ├── Config.json
+│   ├── Compatibility.json
 │   ├── UpDateR.ps1
 │   ├── Install-TC.ps1
 │   ├── Install-HDS.ps1
 │   └── ...
-├── Apps/
-└── .gitignore
+└── Apps/
+    ├── AppsList.json
+    └── *.exe (letöltött telepítők)
 
 
 
