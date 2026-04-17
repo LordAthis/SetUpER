@@ -1,0 +1,46 @@
+{
+  "apps": [
+    {
+      "id": "TotalCommander",
+      "name": "Total Commander",
+      "category": "A",
+      "installer": "tc.exe /S",
+      "uninstallKey": "TotalCommander"
+    },
+    {
+      "id": "HDSentinel",
+      "name": "H.D.Sentinel",
+      "category": "A",
+      "installer": "hdsentinel.exe /S",
+      "uninstallKey": "Hard Disk Sentinel"
+    },
+    {
+      "id": "VLC",
+      "name": "VLC MediaPlayer",
+      "category": "B",
+      "installer": "vlc.exe /S",
+      "uninstallKey": "VLC media player"
+    },
+    {
+      "id": "Brave",
+      "name": "Brave",
+      "category": "B",
+      "installer": "BraveBrowserStandaloneSetup.exe /silent",
+      "uninstallKey": "BraveSoftware"
+    },
+    {
+      "id": "WinZip",
+      "name": "WinZip",
+      "category": "C",
+      "installer": "winzip.exe /noqp",
+      "uninstallKey": "WinZip"
+    },
+    {
+      "id": "7Zip",
+      "name": "7-Zip",
+      "category": "C",
+      "installer": "7z.exe /S",
+      "uninstallKey": "7-Zip"
+    }
+  ]
+}
