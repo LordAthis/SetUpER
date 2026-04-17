@@ -1,3 +1,10 @@
+
+    # Itt az -ArgumentList kapja meg a tömböt
+
+# Config Ă©s AppsList betĂ¶ltĂ©s (javĂ­tott Ăştvonalak)
+
+# AlapĂ©rtelmezett meghajtĂł vĂˇlasztĂˇs
+
 # Starter.ps1 - Fő indí­tó
 
 # Jogosultság emelés
@@ -6,11 +13,14 @@ if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     exit $LASTEXITCODE
 }
 
+# Munkakönyvtár beállítása (admin Újraindítás után C:\Windows\system32 lesz)
+Set-Location $PSScriptRoot
+
 # Mappák létrehozása
 New-Item -ItemType Directory -Force -Path "LOG", "Scripts", "Apps" | Out-Null
 
 function Install-App($app, $config) {
-    Write-Log "TelepĂ­tĂ©s indĂ­tĂˇsa: $($app.name)"
+    Write-Log "Telepí­tés indítása: $($app.name)"
     
     # Elmentjük a főkönyvtárat, hogy vissza tudjunk találni
     $mainDir = Get-Location
@@ -18,16 +28,16 @@ function Install-App($app, $config) {
     # Belépünk a Scripts mappába, hogy az al-szkriptek lássák a fájljaikat
     Set-Location ".\Scripts"
     
-    Write-Host "Folyamatban: LetĂ¶ltĂ©s/FrissĂ­tĂ©s..." -ForegroundColor Cyan
-    & ".\UpDateR.ps1" -AppId $app.id
+    Write-Host "Folyamatban: Letötés/Frissí­tés..." -ForegroundColor Cyan
+    powershell.exe -ExecutionPolicy Bypass -File ".\UpDateR.ps1" -AppId $app.id
     
-    Write-Host "Folyamatban: TelepĂ­tĂ©s..." -ForegroundColor Cyan
-    & ".\Install-$($app.id).ps1" -InstallDir $config.installDir
+    Write-Host "Folyamatban: Telepítés..." -ForegroundColor Cyan
+    powershell.exe -ExecutionPolicy Bypass -File ".\Install-$($app.id).ps1" -InstallDir $config.installDir
     
     # Visszalépünk a főkönyvtárba a következő app vagy a naplózás miatt
     Set-Location $mainDir
     
-    Write-Log "Sikeresen telepĂ­tve: $($app.name)"
+    Write-Log "Sikeresen telepí­tve: $($app.name)"
 }
 
 
@@ -52,27 +62,27 @@ function Write-Log {
     Add-Content -Path "LOG/setup.log" -Value $logMessage
 }
 
-# Config Ă©s AppsList betĂ¶ltĂ©s (javĂ­tott Ăştvonalak)
+# Config és AppsList betötés (javí­tott útvonalak)
 $config = Get-Content "Scripts/Config.json" | ConvertFrom-Json
 $appsList = Get-Content "Apps/AppsList.json" | ConvertFrom-Json
 
-# AlapĂ©rtelmezett meghajtĂł vĂˇlasztĂˇs
+# Alapértelmezett meghajtó választás
 $drives = $config.defaultDrives
-Write-Host "AlapĂ©rtelmezett telepĂ­tĂ©si meghajtĂł vĂˇlasztĂˇs:"
+Write-Host "Alapértelmezett telepí­tési meghajtó választás:"
 for($i=0; $i -lt $drives.Length; $i++) { Write-Host "$($i+1). $($drives[$i])" }
-$driveChoice = Read-Host "VĂˇlassz (Enter = 1. $($drives[0]))"
+$driveChoice = Read-Host "Válassz (Enter = 1. $($drives[0]))"
 if([string]::IsNullOrEmpty($driveChoice)) { $driveChoice = 0 }
 $config.installDir = "$($drives[$driveChoice])\Program Files"
-Write-Log "TelepĂ­tĂ©si Ăştvonal: $($config.installDir)"
+Write-Log "Telepí­tési útvonal: $($config.installDir)"
 
-# TelepĂ­tett app-ek lekĂ©rdezĂ©s
+# Telepí­tett app-ek lekérdezés
 $installedApps = @{}
 Get-ChildItem "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*" | ForEach-Object {
     $name = $_.GetValue('DisplayName')
     if($name) { $installedApps[$name] = $true }
 }
 
-# KategĂłriĂˇk csoportosĂ­tĂˇsa
+# Kategóriák csoportosí­tása
 $cats = @{}
 foreach($app in $appsList.apps) {
     if(-not $installedApps[$app.name]) {
@@ -81,10 +91,10 @@ foreach($app in $appsList.apps) {
     }
 }
 
-# MenĂĽ kiĂ­rĂˇs
+# Menü kií­rás
 Clear-Host
-Write-Host "===== SetUpER TelepĂ­tĂ©si SegĂ©d =====" -ForegroundColor Cyan
-Write-Host "0. Ă–sszes telepĂ­tĂ©s" -ForegroundColor Green
+Write-Host "===== SetUpER Telepí­tési Segéd =====" -ForegroundColor Cyan
+Write-Host "0. Összes telepítés" -ForegroundColor Green
 foreach($cat in $cats.Keys | Sort-Object) {
     Write-Host "$cat`:" -ForegroundColor Yellow
     $i = 1
@@ -93,9 +103,9 @@ foreach($cat in $cats.Keys | Sort-Object) {
         $i++
     }
 }
-Write-Host "X. KilĂ©pĂ©s" -ForegroundColor Red
+Write-Host "X. Kilépés" -ForegroundColor Light-Geen
 
-$choice = Read-Host "`nVĂˇlassz (pl. A1, 0, X)"
+$choice = Read-Host "`nVálassz (pl. A1, 0, X)"
 if($choice -eq "X" -or $choice -eq "x") { exit }
 
 if($choice -eq "0") {
@@ -113,4 +123,3 @@ if($choice -eq "0") {
 }
 
 Write-Log "Telepítés befejezve"
-
