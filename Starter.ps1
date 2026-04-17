@@ -81,8 +81,8 @@ Write-Log "Telepítés befejezve"
 
 function Install-App($app, $config) {
     Write-Log "Telepítés indítása: $($app.name)"
-    Show-Progress "Letöltés..." { & Scripts/UpDateR.ps1 -AppId $app.id }
-    Show-Progress "Telepítés..." { & Scripts/Install-$($app.id).ps1 -InstallDir $config.installDir }
+    Show-Progress "Letöltés..." { & ".\Scripts\UpDateR.ps1" -AppId $app.id }
+    Show-Progress "Telepítés..." { & ".\Scripts\Install-$($app.id).ps1" -InstallDir $config.installDir }
     Write-Log "Sikeresen telepítve: $($app.name)"
 }
 
