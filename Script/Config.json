@@ -1,8 +1,8 @@
 {
-  "logPath": "LOG/setup.log",
-  "downloadDir": "Apps",
+  "logPath": "../LOG/setup.log",
+  "downloadDir": "../Apps",
   "scriptsDir": "Scripts",
   "installDir": "C:\\Program Files",
   "defaultDrives": ["C:", "D:", "E:"],
-  "silentInstall": $true
+  "silentInstall": true
 }
