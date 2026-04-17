@@ -24,14 +24,14 @@
       "installer": "vlc.exe /S",
       "uninstallKey": "VLC media player"
     },
-    {
-      "id": "Brave",
-      "name": "Brave",
-      "category": "B",
-      "downloadUrl": "https://github.com/brave/brave-browser/releases/download/v1.65.113/BraveBrowserStandaloneSetup.exe",
-      "installer": "BraveBrowserStandaloneSetup.exe --chrome-silent-install",
-      "uninstallKey": "BraveSoftware"
-    },
+{
+  "id": "Brave",
+  "name": "Brave",
+  "category": "B",
+  "downloadUrl": "https://brave-browser-downloads.s3.brave.com/latest/brave_installer-x64.exe",
+  "installer": "--chrome-silent-install",
+  "uninstallKey": "BraveSoftware"
+},
     {
       "id": "WinZip",
       "name": "WinZip",
