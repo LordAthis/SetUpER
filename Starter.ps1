@@ -9,6 +9,25 @@ if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 # Mappák létrehozása
 New-Item -ItemType Directory -Force -Path "LOG", "Scripts", "Apps" | Out-Null
 
+function Install-App($app, $config) {
+    Write-Log "Telepítés indítása: $($app.name)"
+    Show-Progress "Letöltés..." { & ".\Scripts\UpDateR.ps1" -AppId $app.id }
+    Show-Progress "Telepítés..." { & ".\Scripts\Install-$($app.id).ps1" -InstallDir $config.installDir }
+    Write-Log "Sikeresen telepítve: $($app.name)"
+}
+
+function Show-Progress($text, $scriptBlock) {
+    $job = Start-Job -ScriptBlock $scriptBlock
+    while($job.State -eq "Running") {
+        Write-Host "$text [$('.' * ((Get-Date).Second % 4 + 1))]" -NoNewline
+        Start-Sleep 1
+        Write-Host "`r$((' ' * 50))`r" -NoNewline
+    }
+    Receive-Job $job
+    Remove-Job $job
+}
+
+
 function Write-Log {
     param([string]$Message, [string]$Level = "INFO")
     $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
@@ -73,26 +92,9 @@ if($choice -eq "0") {
     foreach($cat in $cats.Keys) {
         $apps = $cats[$cat]
         $target = $apps | Where-Object { $_.id -eq $choice -or $choice -eq "${cat}$($apps.IndexOf($_)+1)" }
-        if($target) { & ".\Scripts\Install-$($target).ps1" -Config $config; break }
+        if($target) { Install-App $target $config; break }
     }
 }
 
 Write-Log "Telepítés befejezve"
 
-function Install-App($app, $config) {
-    Write-Log "Telepítés indítása: $($app.name)"
-    Show-Progress "Letöltés..." { & ".\Scripts\UpDateR.ps1" -AppId $app.id }
-    Show-Progress "Telepítés..." { & ".\Scripts\Install-$($app.id).ps1" -InstallDir $config.installDir }
-    Write-Log "Sikeresen telepítve: $($app.name)"
-}
-
-function Show-Progress($text, $scriptBlock) {
-    $job = Start-Job -ScriptBlock $scriptBlock
-    while($job.State -eq "Running") {
-        Write-Host "$text [$('.' * ((Get-Date).Second % 4 + 1))]" -NoNewline
-        Start-Sleep 1
-        Write-Host "`r$((' ' * 50))`r" -NoNewline
-    }
-    Receive-Job $job
-    Remove-Job $job
-}
