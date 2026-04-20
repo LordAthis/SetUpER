@@ -1,5 +1,21 @@
 param([string]$InstallDir = "C:\Program Files")
 
+# Futó folyamat ellenőrzése
+$_running = Get-Process "7zG" -ErrorAction SilentlyContinue
+if ($_running) {
+    Write-Host ""
+    Write-Host "FIGYELEM: 7-Zip jelenleg fut!" -ForegroundColor Yellow
+    $valasz = Read-Host "Zarjuk be a telepites elott? (I/N)"
+    if ($valasz -match "^[Ii]$") {
+        Stop-Process -Name "7zG" -Force -ErrorAction SilentlyContinue
+        Start-Sleep -Seconds 2
+        Write-Host "7-Zip bezarva." -ForegroundColor Green
+    } else {
+        Write-Host "A telepites folytatodik, de hibat okozhat!" -ForegroundColor Yellow
+    }
+}
+
+
 $appPath = Join-Path $PSScriptRoot "../Apps/7Zip.exe"
 $appPath = [System.IO.Path]::GetFullPath($appPath)
 
