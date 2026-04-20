@@ -96,7 +96,7 @@ foreach($cat in $cats.Keys | Sort-Object) {
         $i++
     }
 }
-Write-Host "X. Kilépés" -ForegroundColor Light-Geen
+Write-Host "X. Kilépés" -ForegroundColor Green
 
 $choice = Read-Host "`nVálassz (pl. A1, 0, X)"
 if($choice -eq "X" -or $choice -eq "x") { exit }
