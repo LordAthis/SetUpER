@@ -2,7 +2,7 @@
 # Setup Tool's - Telepítési segéd
 
 
-## Önnmagában is használható repó, a Starter.ps1 is képes indítani és kezelni.
+## Önmagában is használható repó, a Starter.ps1 is képes indítani és kezelni.
 A SetUpER egy professzionális, PowerShell-alapú keretrendszer, amely menüvezérelt felületen keresztül teszi lehetővé a Windows alkalmazások csendes telepítését, frissítését és rendszerezését.
 Teszi mindezt kategóriákra bontott, interaktív menüvel, részletes logolással.
 
