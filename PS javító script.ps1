@@ -1,1 +1,1 @@
-Set-ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
+﻿Set-ExecutionPolicy RemoteSigned -Scope LocalMachine -Force

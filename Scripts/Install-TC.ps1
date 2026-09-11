@@ -1,4 +1,4 @@
-param([string]$InstallDir = "C:\Program Files")
+﻿param([string]$InstallDir = "C:\Program Files")
 
 # --- Útvonalak előkészítése ---
 $InstallDir = $InstallDir.Trim().TrimEnd('\').TrimEnd('"')
@@ -14,7 +14,7 @@ $tempDir    = "C:\Temp"
 $tempIni    = Join-Path $tempDir "wincmd_backup.ini"
 $logFile    = "$PSScriptRoot/../LOG/setup.log"
 
-# --- Log-függvény (helyi, ha a Starter nem hí­vta be) ---
+# --- Log-függvény (helyi, ha a Starter nem hívta be) ---
 function Write-TCLog {
     param([string]$Message, [string]$Level = "INFO")
     $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
@@ -24,7 +24,7 @@ function Write-TCLog {
     Add-Content -Path $logFile -Value $entry
 }
 
-Write-TCLog "=== Total Commander telepí­és kezdete ==="
+Write-TCLog "=== Total Commander telepíés kezdete ==="
 Write-TCLog "Célkönyvtár: $InstallDir"
 
 # -------------------------------------------------------
@@ -57,7 +57,7 @@ if ($existingInstall) {
     $alreadyInstalled = $true
     Write-TCLog "TC már telepítve van. Helye: $existingPath"
 } else {
-    Write-TCLog "TC nincs telepí­tve, friss telepí­tés következik."
+    Write-TCLog "TC nincs telepítve, friss telepítés következik."
 }
 
 # -------------------------------------------------------
@@ -83,18 +83,18 @@ if ($alreadyInstalled -and $existingPath -and (Test-Path $existingPath)) {
             Write-TCLog "Felhasználó nem kérte az INI mentését." "WARN"
         }
     } else {
-        Write-TCLog "Nem található wincmd.ini a meglévő telepí­tési mappában." "WARN"
+        Write-TCLog "Nem található wincmd.ini a meglévő telepítési mappában." "WARN"
     }
 }
 
 # -------------------------------------------------------
-# 3. install.inf előkészítése és telepí­tés
+# 3. install.inf előkészítése és telepítés
 # -------------------------------------------------------
 Write-TCLog "appPath feloldva: $appPath"
 Write-TCLog "infSource feloldva: $infSource"
 
 if (!(Test-Path $appPath)) {
-    Write-TCLog "TC telepí­tő nem található: $appPath" "ERROR"
+    Write-TCLog "TC telepítő nem található: $appPath" "ERROR"
     Read-Host "Nyomj Entert a kilépéshez"
     exit 1
 }
@@ -104,13 +104,13 @@ $appsDir = Split-Path $appPath -Parent
 # install.inf: dinamikusan generáljuk a tényleges InstallDir-rel
 $infUsed = $false
 if (Test-Path $infSource) {
-    # Beolvassuk a sablon INF-et, és felülí­rjuk a directory= sort
+    # Beolvassuk a sablon INF-et, és felülírjuk a directory= sort
     $infContent = Get-Content $infSource -Raw
     $infContent = $infContent -replace '(?m)^directory=.*$', "directory=$InstallDir"
     # [Version] szekció ver= sorát konkrétra cseréljük (wildcard-ot nem fogad el a TC)
     $infContent = $infContent -replace '(?m)^ver=.*$', "ver=11.03"
     $infTarget = Join-Path $appsDir "install.inf"
-    # PS 5.1 kompatibilis BOM-mentes UTF-8 í­rás
+    # PS 5.1 kompatibilis BOM-mentes UTF-8 írás
     [System.IO.File]::WriteAllText($infTarget, $infContent, [System.Text.UTF8Encoding]::new($false))
     Write-TCLog "install.inf generálva: $infTarget (directory=$InstallDir)"
     $infUsed = $true
@@ -118,7 +118,7 @@ if (Test-Path $infSource) {
     Write-TCLog "install.inf sablon nem található ($infSource), csak /S /D kapcsolókkal fut a telepítő." "WARN"
 }
 
-Write-TCLog "Telepítő indí­tása: $appPath /S /D=$InstallDir (WorkingDir: $appsDir)"
+Write-TCLog "Telepítő indítása: $appPath /S /D=$InstallDir (WorkingDir: $appsDir)"
 $argList = "/S /D=$InstallDir"
 $process = Start-Process -FilePath $appPath -ArgumentList $argList -WorkingDirectory $appsDir -Wait -NoNewWindow -PassThru
 

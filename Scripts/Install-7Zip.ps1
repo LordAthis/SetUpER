@@ -1,4 +1,4 @@
-param([string]$InstallDir = "C:\Program Files")
+﻿param([string]$InstallDir = "C:\Program Files")
 
 # Futó folyamat ellenőrzése
 $_running = Get-Process "7zG" -ErrorAction SilentlyContinue

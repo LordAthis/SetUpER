@@ -1,64 +1,157 @@
 {
   "apps": [
     {
+      "id": "RustDesk",
+      "name": "RustDesk",
+      "category": "E",
+      "downloadUrl": "https://github.com/rustdesk/rustdesk/releases/download/1.4.9/rustdesk-1.4.9-x86_64.exe",
+      "installer": "rustdesk.exe --silent-install",
+      "uninstallKey": "RustDesk",
+      "recommended": true,
+      "note": "Tavfelugyelet - ingyenes, nyilt forrasu, sajat szerverrel is hasznalhato. A verziószám (1.4.9) a linkben van - ha idokozben frissul a RustDesk, ezt a linket frissiteni kell."
+    },
+    {
+      "id": "MeshCentral",
+      "name": "MeshCentral",
+      "category": "E",
+      "downloadUrl": "",
+      "installer": "",
+      "uninstallKey": "MeshCentral",
+      "recommended": false,
+      "notReady": true,
+      "note": "Tavfelugyelet - ELOKESZITVE, de NEM epitheto be egyetlen kozvetlen linkkel: a MeshCentral kliens (MeshAgent) minden telepitesnel a SAJAT MeshCentral szerveredhez kotott, egyedi letoltesi cimmel rendelkezik. Ha van sajat MeshCentral szervered, add meg a cimet, es a Scripts\\Install-MeshCentral.ps1 mar kesz a kitoltesre."
+    },
+    {
+      "id": "DWService",
+      "name": "DWService",
+      "category": "E",
+      "downloadUrl": "https://www.dwservice.net/download/dwagent.exe",
+      "installer": "dwagent.exe -silent",
+      "uninstallKey": "DWAgent",
+      "recommended": false,
+      "note": "Tavfelugyelet - ingyenes, bongeszo-alapu (a masik oldalon nem kell kliens), a hivatalos letoltesi link atiranyitassal mukodik."
+    },
+    {
+      "id": "TeamViewer",
+      "name": "TeamViewer",
+      "category": "E",
+      "downloadUrl": "https://download.teamviewer.com/download/TeamViewer_Setup_x64.exe",
+      "installer": "TeamViewer_Setup_x64.exe /S",
+      "uninstallKey": "TeamViewer",
+      "recommended": false,
+      "note": "Tavfelugyelet - legelterjedtebb valasztas, de ingyenes/uzleti hasznalatra licenc-korlatos. A link a TeamViewer sajat, hosszu ideje stabil, hivatalos leltoltesi cime."
+    },
+    {
+      "id": "WinZip",
+      "name": "WinZip",
+      "category": "E",
+      "downloadUrl": "https://download.winzip.com/gl/nkln/winzip77-home.exe",
+      "installer": "winzip.exe /rs /ms /no-desktop",
+      "uninstallKey": "WinZip",
+      "recommended": false
+    },
+    {
+      "id": "WinRAR",
+      "name": "WinRAR",
+      "category": "E",
+      "downloadUrl": "https://www.win-rar.com/fileadmin/winrar-versions/winrar/winrar-x64-723.exe",
+      "installer": "winrar-x64-723.exe /S",
+      "uninstallKey": "WinRAR",
+      "recommended": false,
+      "note": "A verziószám (723 = 7.23) a fajlnevben van - ha frissul a WinRAR, ezt a linket frissiteni kell."
+    },
+    {
+      "id": "7Zip",
+      "name": "7-Zip",
+      "category": "E",
+      "downloadUrl": "https://www.7-zip.org/a/7z2408-x64.exe",
+      "installer": "7z.exe /S",
+      "uninstallKey": "7-Zip",
+      "recommended": true,
+      "note": "Ajanlott alapertelmezett tomoritoprogram - ingyenes, nyilt forrasu, minden format kezeli."
+    },
+    {
+      "id": "VLC",
+      "name": "VLC MediaPlayer",
+      "category": "M",
+      "downloadUrl": "https://mirror.kumi.systems/videolan/vlc/3.0.23/win64/vlc-3.0.23-win64.exe",
+      "installer": "vlc.exe /S",
+      "uninstallKey": "VLC media player",
+      "recommended": true
+    },
+    {
+      "id": "MPCHC",
+      "name": "MPC-HC",
+      "category": "M",
+      "downloadUrl": "",
+      "installer": "",
+      "uninstallKey": "MPC-HC",
+      "recommended": false,
+      "notReady": true,
+      "note": "ELOKESZITVE: a clsid2/mpc-hc kozossegi fork (github.com/clsid2/mpc-hc) adja ki aktivan, legutobb 2.8.1 verzioval, de a pontos .exe fajlnev a kiadasi oldalon dinamikusan (JS-sel) tolt be, innen nem volt biztonsagosan kiolvashato - ellenorizd a pontos linket a github.com/clsid2/mpc-hc/releases/tag/2.8.1 oldalon, es told be az Install-MPCHC.ps1-be."
+    },
+    {
+      "id": "Brave",
+      "name": "Brave",
+      "category": "I",
+      "downloadUrl": "https://laptop-updates.brave.com/latest/winx64",
+      "installer": "brave_installer.exe --silent --install",
+      "uninstallKey": "Brave",
+      "recommended": true,
+      "note": "Ajanlott - a projekt sajat CleanBrave_WinReg debloat-eszkoze is ehhez keszult."
+    },
+    {
+      "id": "Firefox",
+      "name": "Firefox",
+      "category": "I",
+      "downloadUrl": "https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=hu",
+      "installer": "firefox_installer.exe /S",
+      "uninstallKey": "Mozilla Firefox",
+      "recommended": false,
+      "note": "A Mozilla sajat, mindig-legfrissebb-verziora mutato hivatalos atiranyitasos linkje (magyar nyelvvel)."
+    },
+    {
+      "id": "Chrome",
+      "name": "Chrome",
+      "category": "I",
+      "downloadUrl": "https://dl.google.com/chrome/install/latest/chrome_installer.exe",
+      "installer": "chrome_installer.exe /silent /install",
+      "uninstallKey": "Google Chrome",
+      "recommended": false,
+      "note": "A Google sajat, mindig-legfrissebb-verziora mutato hivatalos, onallo (offline) telepito linkje."
+    },
+    {
       "id": "TC",
       "name": "Total Commander",
-      "category": "A",
+      "category": "K",
       "downloadUrl": "https://totalcommander.ch/1156/newcert/tcmd1156x64.exe",
       "installer": "tc.exe /S /A1 /H1",
       "uninstallKey": "Total Commander",
+      "recommended": true,
       "downloadedVersion": "11.56",
       "downloadedDate": "2026-04-20 14:32"
     },
     {
       "id": "HDS",
       "name": "H.D.Sentinel",
-      "category": "A",
+      "category": "K",
       "downloadUrl": "https://www.hdsentinel.com/hdsentinel_pro_setup.exe",
       "installer": "hdsentinel.exe /VERYSILENT /NORESTART",
       "uninstallKey": "Hard Disk Sentinel",
-      "downloadedVersion": "4.71.0.0            ",
+      "recommended": true,
+      "downloadedVersion": "4.71.0.0",
       "downloadedDate": "2026-04-20 14:33"
     },
     {
-      "id": "VLC",
-      "name": "VLC MediaPlayer",
-      "category": "B",
-      "downloadUrl": "https://mirror.kumi.systems/videolan/vlc/3.0.23/win64/vlc-3.0.23-win64.exe",
-      "installer": "vlc.exe /S",
-      "uninstallKey": "VLC media player",
-      "downloadedVersion": "ismeretlen",
-      "downloadedDate": "2026-04-20 14:34"
-    },
-    {
-      "id": "Brave",
-      "name": "Brave",
-      "category": "B",
-      "downloadUrl": "https://laptop-updates.brave.com/latest/winx64",
-      "installer": "brave_installer.exe --silent --install",
-      "uninstallKey": "Brave",
-      "downloadedVersion": "1.3.361.151",
-      "downloadedDate": "2026-04-20 14:34"
-    },
-    {
-      "id": "WinZip",
-      "name": "WinZip",
-      "category": "C",
-      "downloadUrl": "https://download.winzip.com/gl/nkln/winzip77-home.exe",
-      "installer": "winzip.exe /rs /ms /no-desktop",
-      "uninstallKey": "WinZip",
-      "downloadedVersion": "77.0.16478.0",
-      "downloadedDate": "2026-04-20 14:37"
-    },
-    {
-      "id": "7Zip",
-      "name": "7-Zip",
-      "category": "C",
-      "downloadUrl": "https://www.7-zip.org/a/7z2408-x64.exe",
-      "installer": "7z.exe /S",
-      "uninstallKey": "7-Zip",
-      "downloadedVersion": "24.08",
-      "downloadedDate": "2026-04-20 14:38"
+      "id": "RTS",
+      "name": "RTS",
+      "category": "K",
+      "downloadUrl": "",
+      "installer": "",
+      "uninstallKey": "RTS",
+      "recommended": false,
+      "notReady": true,
+      "note": "ELOKESZITVE: az RTS keretrendszernek (github.com/LordAthis/RTS) meg nincs kiadott GitHub Release-je (csak CI build-artifact), igy nincs stabil, kozvetlen letoltesi link hozza. Amint keszul egy elso hivatalos release, ez az elem bekotheto."
     }
   ]
 }

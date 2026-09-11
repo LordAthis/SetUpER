@@ -1,4 +1,4 @@
-param([string]$AppId)
+﻿param([string]$AppId)
 
 $config   = Get-Content "Config.json" | ConvertFrom-Json
 $appsList = Get-Content "../Apps/AppsList.json" | ConvertFrom-Json

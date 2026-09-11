@@ -1,4 +1,4 @@
-param([string]$InstallDir = "C:\Program Files")
+﻿param([string]$InstallDir = "C:\Program Files")
 
 $appPath = [System.IO.Path]::GetFullPath("$PSScriptRoot/../Apps/Brave.exe")
 $logFile = [System.IO.Path]::GetFullPath("$PSScriptRoot/../LOG/setup.log")

@@ -1,4 +1,4 @@
-param([string]$InstallDir)
+﻿param([string]$InstallDir)
 
 # Futó folyamat ellenőrzése
 $_running = Get-Process "wzqkpick" -ErrorAction SilentlyContinue

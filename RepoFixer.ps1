@@ -1,6 +1,6 @@
-<#
+Ôªø<#
 .SYNOPSIS
-    RepoFixer v3.3 - Ultra-stabil verziÛ .NET hÌv·sokkal
+    RepoFixer v3.3 - Ultra-stabil verzi√≥ .NET h√≠v√°sokkal
 #>
 
 $ScriptName = "RepoFixer.ps1"
@@ -14,23 +14,23 @@ function Write-Log($Message) {
     if (Test-Path $TargetDir) { $LogLine | Out-File -FilePath $LogFile -Append }
 }
 
-# 1. ADMIN ELLEN’RZ…S
+# 1. ADMIN ELLEN≈êRZ√âS
 if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Write-Warning "Admin jog sz¸ksÈges!"
+    Write-Warning "Admin jog sz√ºks√©ges!"
     pause; exit
 }
 
 $CurrentLocation = $MyInvocation.MyCommand.Definition
 
-# TELEPÕT…SI LOGIKA
+# TELEP√çT√âSI LOGIKA
 if (-not ($CurrentLocation.StartsWith($TargetDir))) {
-    $Choice = Read-Host "TelepÌted/FrissÌted a scriptet a rendszerbe? (i/n)"
+    $Choice = Read-Host "Telep√≠ted/Friss√≠ted a scriptet a rendszerbe? (i/n)"
     if ($Choice -eq 'i') {
-        Write-Log "TelepÌtÈs indÌt·sa..."
+        Write-Log "Telep√≠t√©s ind√≠t√°sa..."
         if (-not (Test-Path $TargetDir)) { New-Item -Path $TargetDir -ItemType Directory -Force | Out-Null }
         Copy-Item -Path $CurrentLocation -Destination (Join-Path $TargetDir $ScriptName) -Force
         
-        # Registry ·gak (csak a kulcs nevei)
+        # Registry √°gak (csak a kulcs nevei)
         $RegKeys = @(
             "Directory\Background\shell\RepoFixer",
             "Directory\shell\RepoFixer",
@@ -38,30 +38,30 @@ if (-not ($CurrentLocation.StartsWith($TargetDir))) {
         )
 
         foreach ($SubKey in $RegKeys) {
-            Write-Log "Regisztr·l·s: HKCR\$SubKey"
+            Write-Log "Regisztr√°l√°s: HKCR\$SubKey"
             try {
-                # .NET direkt elÈrÈs a PowerShell parancsok helyett (NEM tud lefagyni)
+                # .NET direkt el√©r√©s a PowerShell parancsok helyett (NEM tud lefagyni)
                 $Key = [Microsoft.Win32.Registry]::ClassesRoot.CreateSubKey($SubKey)
-                $Key.SetValue("MUIVerb", "RepoFixer - JavÌt·s Ès Felold·s")
+                $Key.SetValue("MUIVerb", "RepoFixer - Jav√≠t√°s √©s Felold√°s")
                 $Key.SetValue("Icon", "powershell.exe")
                 
                 $CmdKey = $Key.CreateSubKey("command")
                 $ExecLine = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File `"$TargetDir\$ScriptName`""
-                $CmdKey.SetValue("", $ExecLine) # Az ¸res nÈv az (AlapÈrtelmezett)
+                $CmdKey.SetValue("", $ExecLine) # Az √ºres n√©v az (Alap√©rtelmezett)
                 
                 $CmdKey.Close(); $Key.Close()
             } catch {
-                Write-Error "Hiba a Registry Ìr·sakor: $($_.Exception.Message)"
+                Write-Error "Hiba a Registry √≠r√°sakor: $($_.Exception.Message)"
             }
         }
-        Write-Log "K…SZ! A telepÌtÈs befejezıdˆtt."
+        Write-Log "K√âSZ! A telep√≠t√©s befejez≈ëd√∂tt."
         pause; exit
     }
 }
 
-# 2. M€VELETI R…SZ
+# 2. M≈∞VELETI R√âSZ
 $WorkDir = Get-Location
-Write-Log "MunkavÈgzÈs: $WorkDir"
+Write-Log "Munkav√©gz√©s: $WorkDir"
 Get-ChildItem -Recurse | Unblock-File
-Write-Log "F·jlok feloldva. KÈsz!"
+Write-Log "F√°jlok feloldva. K√©sz!"
 Start-Sleep -Seconds 5

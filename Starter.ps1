@@ -1,4 +1,19 @@
-# Starter.ps1 - Fő indí­tó
+﻿# Starter.ps1 - Fő indító
+
+# Konzol UTF-8 kimenet beallitasa (ekezetes karakterek helyes megjelenitesehez -
+# a fajl maga mar UTF-8 BOM-mal van mentve, ez itt csak a konzol-ablak sajat
+# kodlapjat allitja at, hogy a Write-Host altal kiirt szoveg is helyesen
+# jelenjen meg, ne csak a fajlban legyen helyes). Windows 7 SP1-tol felfele
+# mukodik, XP-n a legtobb konzol mar tamogatja a 65001-es kodlapot is - ha
+# nem, a szoveg legrosszabb esetben is csak olvashatatlan lesz, de a program
+# ettol meg lefut.
+try {
+    [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+    chcp 65001 > $null
+} catch {
+    # Regi rendszereken (pl. PowerShell 2.0) nem minden eleres el ez a mod -
+    # ez esetben a program a rendszer alapertelmezett kodlapjaval fut tovabb.
+}
 
 # Jogosultság emelés
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
@@ -13,7 +28,7 @@ Set-Location $PSScriptRoot
 New-Item -ItemType Directory -Force -Path "LOG", "Scripts", "Apps" | Out-Null
 
 function Install-App($app, $config) {
-    Write-Log "Telepí­tés indítása: $($app.name)"
+    Write-Log "Telepítés indítása: $($app.name)"
     
     # Elmentjük a főkönyvtárat, hogy vissza tudjunk találni
     $mainDir = Get-Location
@@ -21,7 +36,7 @@ function Install-App($app, $config) {
     # Belépünk a Scripts mappába, hogy az al-szkriptek lássák a fájljaikat
     Set-Location ".\Scripts"
     
-    Write-Host "Folyamatban: Letötés/Frissí­tés..." -ForegroundColor Cyan
+    Write-Host "Folyamatban: Letötés/Frissítés..." -ForegroundColor Cyan
     powershell.exe -ExecutionPolicy Bypass -File ".\UpDateR.ps1" -AppId $app.id
     
     Write-Host "Folyamatban: Telepítés..." -ForegroundColor Cyan
@@ -30,7 +45,7 @@ function Install-App($app, $config) {
     # Visszalépünk a főkönyvtárba a következő app vagy a naplózás miatt
     Set-Location $mainDir
     
-    Write-Log "Sikeresen telepí­tve: $($app.name)"
+    Write-Log "Sikeresen telepítve: $($app.name)"
 }
 
 
@@ -55,27 +70,27 @@ function Write-Log {
     Add-Content -Path "LOG/setup.log" -Value $logMessage
 }
 
-# Config és AppsList betötés (javí­tott útvonalak)
+# Config és AppsList betötés (javított útvonalak)
 $config = Get-Content "Scripts/Config.json" | ConvertFrom-Json
 $appsList = Get-Content "Apps/AppsList.json" | ConvertFrom-Json
 
 # Alapértelmezett meghajtó választás
 $drives = $config.defaultDrives
-Write-Host "Alapértelmezett telepí­tési meghajtó választás:"
+Write-Host "Alapértelmezett telepítési meghajtó választás:"
 for($i=0; $i -lt $drives.Length; $i++) { Write-Host "$($i+1). $($drives[$i])" }
 $driveChoice = Read-Host "Válassz (Enter = 1. $($drives[0]))"
 if([string]::IsNullOrEmpty($driveChoice)) { $driveChoice = 0 }
 $config.installDir = "$($drives[$driveChoice])\Program Files"
-Write-Log "Telepí­tési útvonal: $($config.installDir)"
+Write-Log "Telepítési útvonal: $($config.installDir)"
 
-# Telepí­tett app-ek lekérdezés
+# Telepített app-ek lekérdezés
 $installedApps = @{}
 Get-ChildItem "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*" | ForEach-Object {
     $name = $_.GetValue('DisplayName')
     if($name) { $installedApps[$name] = $true }
 }
 
-# Kategóriák csoportosí­tása
+# Kategóriák csoportosítása
 $cats = @{}
 foreach($app in $appsList.apps) {
     if(-not $installedApps[$app.name]) {
@@ -84,34 +99,55 @@ foreach($app in $appsList.apps) {
     }
 }
 
-# Menü kií­rás
+# Kategoria-betuk emberi olvasasu nevei a menuben
+$catLabels = @{
+    "E" = "Eszkozok / Kellekek"
+    "M" = "Medialejatszok"
+    "I" = "Internet"
+    "K" = "Karbantartas"
+}
+
+# Menü kiírás
 Clear-Host
-Write-Host "===== SetUpER Telepí­tési Segéd =====" -ForegroundColor Cyan
-Write-Host "0. Összes telepítés" -ForegroundColor Green
+Write-Host "===== SetUpER Telepítési Segéd =====" -ForegroundColor Cyan
+Write-Host "0. Ajanlott telepites (csak a preferalt tetelek - lasd AppsList.json 'recommended' mezo)" -ForegroundColor Green
 foreach($cat in $cats.Keys | Sort-Object) {
-    Write-Host "$cat`:" -ForegroundColor Yellow
+    $label = if($catLabels.ContainsKey($cat)) { $catLabels[$cat] } else { $cat }
+    Write-Host "$cat`: $label" -ForegroundColor Yellow
     $i = 1
     foreach($app in $cats[$cat]) {
-        Write-Host "  $cat$i`: $($app.name)" -ForegroundColor White
+        $notReadyTag = if($app.notReady) { " [MEG NEM ELERHETO - lasd lent]" } else { "" }
+        Write-Host "  $cat$i`: $($app.name)$notReadyTag" -ForegroundColor White
         $i++
     }
 }
 Write-Host "X. Kilépés" -ForegroundColor Green
 
-$choice = Read-Host "`nVálassz (pl. A1, 0, X)"
+$choice = Read-Host "`nVálassz (pl. E1, 0, X)"
 if($choice -eq "X" -or $choice -eq "x") { exit }
 
 if($choice -eq "0") {
+    # "0" NEM az osszes tetelt telepiti, csak az AppsList.json-ban
+    # "recommended": true-ra allitott, ajanlott tetelt kategorianként -
+    # igy pl. a 4 tavfelugyeleti eszkoz kozul csak 1 (az ajanlott) telepul,
+    # nem mind a negy. A preferalt tetel a JSON-ban egyenkent atallithato.
     foreach($cat in $cats.Keys | Sort-Object) {
         foreach($app in $cats[$cat]) {
-            Install-App $app $config
+            if($app.recommended -and -not $app.notReady) { Install-App $app $config }
         }
     }
 } else {
     foreach($cat in $cats.Keys) {
         $apps = $cats[$cat]
         $target = $apps | Where-Object { $_.id -eq $choice -or $choice -eq "${cat}$($apps.IndexOf($_)+1)" }
-        if($target) { Install-App $target $config; break }
+        if($target) {
+            if($target.notReady) {
+                Write-Host "`nEz a tetel meg nincs teljesen bekotve (hianyzik hozza a kozvetlen telepito-link vagy sajat konfiguracio - pl. sajat szerver cime). Nezd meg a Scripts\Install-$($target.id).ps1 fajlt a reszletekert." -ForegroundColor Yellow
+            } else {
+                Install-App $target $config
+            }
+            break
+        }
     }
 }
 
