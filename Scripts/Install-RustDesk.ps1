@@ -1,4 +1,5 @@
-﻿param([string]$InstallDir)
+﻿# Verzio: v1.1.0 - 2026-09-11
+param([string]$InstallDir)
 
 $appPath = Join-Path $PSScriptRoot "../Apps/RustDesk.exe"
 

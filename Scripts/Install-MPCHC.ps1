@@ -1,4 +1,5 @@
-﻿param([string]$InstallDir)
+﻿# Verzio: v1.1.0 - 2026-09-11
+param([string]$InstallDir)
 
 # ELOKESZITVE, de meg nincs bekotve konkret letoltesi link:
 # az aktivan fejlesztett kozossegi fork a github.com/clsid2/mpc-hc, legutobb

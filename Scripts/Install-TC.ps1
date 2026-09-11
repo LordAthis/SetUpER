@@ -1,4 +1,5 @@
-﻿param([string]$InstallDir = "C:\Program Files")
+﻿# Verzio: v1.1.0 - 2026-09-11
+param([string]$InstallDir = "C:\Program Files")
 
 # --- Útvonalak előkészítése ---
 $InstallDir = $InstallDir.Trim().TrimEnd('\').TrimEnd('"')

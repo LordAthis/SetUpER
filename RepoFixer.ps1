@@ -1,4 +1,5 @@
-﻿<#
+﻿# Verzio: v1.1.0 - 2026-09-11
+<#
 .SYNOPSIS
     RepoFixer v3.3 - Ultra-stabil verzió .NET hívásokkal
 #>

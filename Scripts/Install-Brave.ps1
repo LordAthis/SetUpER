@@ -1,4 +1,5 @@
-﻿param([string]$InstallDir = "C:\Program Files")
+﻿# Verzio: v1.1.0 - 2026-09-11
+param([string]$InstallDir = "C:\Program Files")
 
 $appPath = [System.IO.Path]::GetFullPath("$PSScriptRoot/../Apps/Brave.exe")
 $logFile = [System.IO.Path]::GetFullPath("$PSScriptRoot/../LOG/setup.log")

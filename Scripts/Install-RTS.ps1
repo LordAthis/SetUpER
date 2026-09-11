@@ -1,4 +1,5 @@
-﻿param([string]$InstallDir)
+﻿# Verzio: v1.1.0 - 2026-09-11
+param([string]$InstallDir)
 
 # ELOKESZITVE, de meg nincs bekotve: az RTS keretrendszernek
 # (github.com/LordAthis/RTS) meg nincs kiadott GitHub Release-je, csak

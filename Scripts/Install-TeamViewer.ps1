@@ -1,4 +1,5 @@
-﻿param([string]$InstallDir)
+﻿# Verzio: v1.1.0 - 2026-09-11
+param([string]$InstallDir)
 
 $_running = Get-Process "TeamViewer" -ErrorAction SilentlyContinue
 if ($_running) {

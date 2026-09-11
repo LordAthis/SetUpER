@@ -1,4 +1,5 @@
-﻿param([string]$AppId)
+﻿# Verzio: v1.1.0 - 2026-09-11
+param([string]$AppId)
 
 $config   = Get-Content "Config.json" | ConvertFrom-Json
 $appsList = Get-Content "../Apps/AppsList.json" | ConvertFrom-Json

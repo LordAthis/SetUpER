@@ -1,4 +1,5 @@
-﻿param([string]$InstallDir)
+﻿# Verzio: v1.1.0 - 2026-09-11
+param([string]$InstallDir)
 
 # ELOKESZITVE, de meg nem hasznalhato "out of the box":
 # a MeshCentral kliens (MeshAgent) MINDIG egy konkret MeshCentral szerverhez

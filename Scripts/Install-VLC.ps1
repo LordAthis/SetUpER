@@ -1,4 +1,5 @@
-﻿param([string]$InstallDir) # A Starter-tol kapott utvonal (pl. D:\Program Files)
+﻿# Verzio: v1.1.0 - 2026-09-11
+param([string]$InstallDir) # A Starter-tol kapott utvonal (pl. D:\Program Files)
 
 # Futó folyamat ellenőrzése
 $_running = Get-Process "vlc" -ErrorAction SilentlyContinue

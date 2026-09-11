@@ -1,4 +1,5 @@
-﻿# Starter.ps1 - Fő indító
+﻿# Verzio: v1.1.0 - 2026-09-11
+# Starter.ps1 - Fő indító
 
 # Konzol UTF-8 kimenet beallitasa (ekezetes karakterek helyes megjelenitesehez -
 # a fajl maga mar UTF-8 BOM-mal van mentve, ez itt csak a konzol-ablak sajat
