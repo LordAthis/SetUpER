@@ -10,7 +10,7 @@
       "installer": "rustdesk.exe --silent-install",
       "uninstallKey": "RustDesk",
       "recommended": true,
-      "note": "Tavfelugyelet - ingyenes, nyilt forrasu, sajat szerverrel is hasznalhato. A verziószám (1.4.9) a linkben van - ha idokozben frissul a RustDesk, ezt a linket frissiteni kell."
+      "note": "Tavfelugyelet - ingyenes, nyilt forrasu, sajat szerverrel is hasznalhato. A verziószám (1.4.9) a linkben van - ha idokozben frissul a RustDesk, ezt a linket frissiteni kell. Opcionalisan sajat (self-hosted) RustDesk szerverhez is kotheto - lasd Apps/Conf/rustdesk-server.json (sablon: rustdesk-server.json.example)."
     },
     {
       "id": "MeshCentral",

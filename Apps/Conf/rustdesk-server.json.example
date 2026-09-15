@@ -1,0 +1,6 @@
+{
+  "host": "rustdesk.pelda.hu",
+  "key": "A_SZERVER_PUBLIKUS_NYILVANOS_KULCSA_ITT",
+  "api_server": "http://rustdesk.pelda.hu:21114",
+  "password": ""
+}

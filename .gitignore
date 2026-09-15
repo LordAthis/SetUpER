@@ -6,3 +6,4 @@ Downloads/
 *.tmp
 Thumbs.db
 .DS_Store
+Apps/Conf/rustdesk-server.json
